@@ -14,7 +14,6 @@ export default function ChatContainer({ currentChat }) {
   const scrollRef = useRef();
   const [past_user_inputs, set_past_user_inputs] = useState([]);
   const [generated_responses, set_generated_responses] = useState([]);
-  const [loaded, setLoaded] = useState(false);
   // const [arrivalMessage, setArrivalMessage] = useState(null);
 
   // useEffect(() => {
@@ -49,6 +48,7 @@ export default function ChatContainer({ currentChat }) {
     msgs.push({ fromSelf: true, message: msg });
     setMessages(msgs);
 
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     const inputs = {
       past_user_inputs: past_user_inputs,
       generated_responses: generated_responses,
@@ -67,7 +67,7 @@ export default function ChatContainer({ currentChat }) {
           set_past_user_inputs(response.conversation.past_user_inputs);
           set_generated_responses(response.conversation.generated_responses);
 
-          if (response.conversation.past_user_inputs.length > 1) {
+          if (response.conversation.past_user_inputs.length > 2) {
             set_generated_responses(
               response.conversation.generated_responses.splice(0, 1)
             );
@@ -77,9 +77,9 @@ export default function ChatContainer({ currentChat }) {
           }
         }
       }
-    }).catch((error) => {
-      console.log(error);
-      msgs.push({ fromSelf: false, message: "Sorry, I'm having trouble understanding you. Can you tell me again?" });
+      else {
+        msgs.push({ fromSelf: false, message: "Sorry, I'm having trouble understanding you. Can you tell me again?" });
+      }
     });
 
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -101,7 +101,7 @@ export default function ChatContainer({ currentChat }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     // toast('The bot can take upto 1 minute to load.', {
     //   position: "top-center",
-    //   autoClose: 5000,
+    //   autoClose: 3000,
     //   hideProgressBar: false,
     //   closeOnClick: true,
     //   pauseOnHover: true,
@@ -109,23 +109,7 @@ export default function ChatContainer({ currentChat }) {
     //   progress: undefined,
     // });
 
-    // var isLoaded = loaded;
 
-    // while (!isLoaded) {
-    //   query({
-    //     inputs: {
-    //       past_user_inputs: [],
-    //       generated_responses: [],
-    //       text: "Hello",
-    //     },
-    //   }).then((response, error) => {
-    //     if (!error && !response.error) {
-    //       // isLoaded = true;
-    //       setLoaded(true);
-    //     }
-    //   });
-    //   isLoaded = loaded;
-    // }
   }, []);
 
   return (
@@ -162,7 +146,7 @@ export default function ChatContainer({ currentChat }) {
             );
           })}
         </div>
-        <ChatInput handleSendMsg={handleSendMsg} loaded={loaded} />
+        <ChatInput handleSendMsg={handleSendMsg} />
         <ToastContainer />
       </Container>
     </>

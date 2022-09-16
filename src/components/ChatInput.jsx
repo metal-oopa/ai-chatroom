@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
 import styled from "styled-components";
+import { query } from "../utils/query";
+import { ToastContainer, toast } from 'react-toastify';
+
 // import Picker from "emoji-picker-react";
 
-export default function ChatInput({ handleSendMsg, loaded }) {
+export default function ChatInput({ handleSendMsg }) {
   const [msg, setMsg] = useState("");
+  const [loaded, setLoaded] = useState(false);
+
   // const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   // const handleEmojiPickerhideShow = () => {
   //   setShowEmojiPicker(!showEmojiPicker);
@@ -25,6 +30,25 @@ export default function ChatInput({ handleSendMsg, loaded }) {
     }
   };
 
+  useEffect(() => {
+    async function loadBot() {
+      await query({
+        inputs: {
+          past_user_inputs: [],
+          generated_responses: [],
+          text: "Hello",
+        },
+      }).then((response, error) => {
+        if (!error && !response.error) {
+          setLoaded(true);
+          console.log(response);
+        }
+      });
+    }
+
+    loadBot();
+  }, []);
+
   return (
     <Container>
       <div className="button-container">
@@ -39,12 +63,13 @@ export default function ChatInput({ handleSendMsg, loaded }) {
           placeholder={loaded ? "Type a message" : "Bot is Loading..."}
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
-          disabled={true}
+          disabled={!loaded}
         />
         <button type="submit">
           <IoMdSend />
         </button>
       </form>
+      <ToastContainer />
     </Container>
   );
 }
