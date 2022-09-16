@@ -84,9 +84,6 @@ const Container = styled.div`
     padding: 0 1rem;
     gap: 1rem;
   }
-  @media screen and (max-width: 500px) {
-    margin-bottom: 3rem;
-  }
   .button-container {
     display: flex;
     align-items: center;
