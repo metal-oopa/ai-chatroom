@@ -1,5 +1,7 @@
 import { sendMessageRoute } from "./APIRoutes";
 
+console.log(process.env.AUTH_TOKEN);
+
 export async function query(data) {
   let response;
   try {
