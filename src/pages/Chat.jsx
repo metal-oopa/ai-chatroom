@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import ChatContainer from "../components/ChatContainer";
-import Welcome from "../components/Welcome";
 
 export default function Chat() {
   const currentChat = {
@@ -13,12 +12,7 @@ export default function Chat() {
     <>
       <Container>
         <div className="container">
-          {/* <Contacts contacts={contacts} changeChat={handleChatChange} /> */}
-          {currentChat === undefined ? (
-            <Welcome />
-          ) : (
-            <ChatContainer currentChat={currentChat} />
-          )}
+          <ChatContainer currentChat={currentChat} />
         </div>
       </Container>
     </>
