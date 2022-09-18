@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ChatInput from "./ChatInput";
-// import Logout from "./Logout";
 import { v4 as uuidv4 } from "uuid";
-// import axios from "axios";
-// import { sendMessageRoute } from "../utils/APIRoutes";
 import { query } from "../utils/query";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function ChatContainer({ currentChat }) {
@@ -14,34 +11,6 @@ export default function ChatContainer({ currentChat }) {
   const scrollRef = useRef();
   const [past_user_inputs, set_past_user_inputs] = useState([]);
   const [generated_responses, set_generated_responses] = useState([]);
-  // const [arrivalMessage, setArrivalMessage] = useState(null);
-
-  // useEffect(() => {
-  //   async function getMessages() {
-  //     const data = await JSON.parse(
-  //       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //     );
-  //     const response = await axios.post(recieveMessageRoute, {
-  //       from: data._id,
-  //       to: currentChat._id,
-  //     });
-  //     setMessages(response.data);
-  //   }
-
-  //   getMessages();
-
-  // }, [currentChat]);
-
-  // useEffect(() => {
-  //   const getCurrentChat = async () => {
-  //     if (currentChat) {
-  //       await JSON.parse(
-  //         localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //       )._id;
-  //     }
-  //   };
-  //   getCurrentChat();
-  // }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
     const msgs = [...messages];
@@ -85,31 +54,8 @@ export default function ChatContainer({ currentChat }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // useEffect(() => {
-  //   if (socket.current) {
-  //     socket.current.on("msg-recieve", (msg) => {
-  //       setArrivalMessage({ fromSelf: false, message: msg });
-  //     });
-  //   }
-  // }, [socket]);
-
-  // useEffect(() => {
-  //   arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-  // }, [arrivalMessage]);
-
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-    // toast('The bot can take upto 1 minute to load.', {
-    //   position: "top-center",
-    //   autoClose: 3000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    // });
-
-
   }, []);
 
   return (
@@ -128,7 +74,6 @@ export default function ChatContainer({ currentChat }) {
               <h3>{currentChat.username}</h3>
             </div>
           </div>
-          {/* <Logout /> */}
         </div>
         <div className="chat-messages">
           {messages.map((message) => {
